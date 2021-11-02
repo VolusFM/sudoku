@@ -1,0 +1,9 @@
+.idea/
+__pycache__/
+venv/
+
+datasets
+
+birthdays.json
+notified_users.json
+*.log
