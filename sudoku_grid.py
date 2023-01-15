@@ -1,3 +1,5 @@
+from typing import Callable
+
 import numpy as np
 
 from numbers_set import NumbersSet
@@ -46,3 +48,21 @@ class SudokuGrid(object):
                             [self.zone_size * zone_column_index + column])
 
         return NumbersSet(self.size, zone)
+
+    def is_complete(self) -> bool:
+        return self.apply_predicate_to_grid(NumbersSet.is_complete)
+
+    def is_correct(self) -> bool:
+        return self.apply_predicate_to_grid(NumbersSet.is_correct)
+
+    def apply_predicate_to_grid(self, predicate: Callable[[NumbersSet], bool]) -> bool:
+        valid = True
+        index: int = 0
+
+        while (index < self.size) and valid:
+            valid = predicate(self.extract_line(index)) and\
+                    predicate(self.extract_column(index)) and\
+                    predicate(self.extract_zone(index))
+            index += 1
+
+        return valid

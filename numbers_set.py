@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class NumbersSet(list[int]):
     size: int
 
@@ -16,10 +19,18 @@ class NumbersSet(list[int]):
     def __setitem__(self, key, value) -> None:
         super().__setitem__(key, value)
 
+    def extract_filled_numbers(self) -> NumbersSet:
+        extracted_numbers: list[int] = [number for number in self if number > 0]
+
+        return NumbersSet(len(extracted_numbers), extracted_numbers)
+
     def is_complete(self) -> bool:
         return self.count(0) == 0
 
-    def is_correct(self):
+    def is_correct(self) -> bool:
+        if not self.is_complete():
+            return False
+
         i = 0
         while i < len(self):
             if self.count(i) > 1:
