@@ -11,10 +11,10 @@ class NumbersSet(list[int]):
     # https://realpython.com/inherit-python-list/#creating-list-like-classes-in-python
 
     def __getitem__(self, item) -> int:
-        return super.__getitem__(self, item)
+        return super().__getitem__(item)
 
     def __setitem__(self, key, value) -> None:
-        super.__setitem__(self, key, value)
+        super().__setitem__(key, value)
 
     def is_complete(self) -> bool:
         return self.count(0) == 0

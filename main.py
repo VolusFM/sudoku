@@ -13,3 +13,7 @@ test_grid_2: SudokuGrid = SudokuGrid(
 print("GO !")
 sudoku_grid_display_service.display_grid(test_grid)
 sudoku_grid_display_service.display_grid(test_grid_2)
+
+print(test_grid.extract_line(3))
+print(test_grid.extract_column(3))
+print(test_grid.extract_zone(3))

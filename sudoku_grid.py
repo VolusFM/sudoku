@@ -36,14 +36,13 @@ class SudokuGrid(object):
 
     def extract_zone(self, index) -> NumbersSet:
         zone: list[int] = []
-        line_index = index // self.zone_size
-        column_index = index % self.zone_size
+        zone_line_index: int = index // self.zone_size
+        zone_column_index: int = index % self.zone_size
 
         for line in range(self.zone_size):
             for column in range(self.zone_size):
-                if self.lines[self.zone_size * line_index + line][self.zone_size * column_index + column] != 0:
-                    zone.append(self.lines
-                                [self.zone_size * line_index + line]
-                                [self.zone_size * column_index + column])
+                zone.append(self.lines
+                            [self.zone_size * zone_line_index + line]
+                            [self.zone_size * zone_column_index + column])
 
         return NumbersSet(self.size, zone)
