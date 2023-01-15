@@ -129,7 +129,7 @@ def backtracking(grille):
             ans[i][j] = 0
             nbCasesCompletees -= 1
             p -= 1
-        else:v
+        else:
             nbCasesCompletees += 1
             p += 1
 

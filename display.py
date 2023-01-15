@@ -1,17 +1,40 @@
 import os
 
+from numbers_set import NumbersSet
+from sudoku_grid import SudokuGrid
 
-def display(grid):
-    ans = f'{os.linesep}+-------+-------+-------+{os.linesep}'
-    for line in range(9):
-        ans = f'{ans}| '
-        for column in range(9):
-            number_string = "_" if grid[line][column] == 0 else grid[line][column]
-            ans = f'{ans}{number_string} '
-            if (column + 1) % 3 == 0:
-                ans = f'{ans}| '
-            if ((line + 1) % 3 == 0) and (line < 6) and (column == 8):
-                ans = f'{ans}{os.linesep}|-------+-------+-------|'
-        ans = f'{ans}{os.linesep}'
-    ans = f'{ans}+-------+-------+-------+'
-    print(ans)
+
+zone_separator: str = '|'
+
+
+def display(grid: SudokuGrid) -> None: # TODO convert to service
+    # TODO refactor this into a method
+    top_line: str = ('+' + '-' * (2 * grid.zone_size + 1)) * grid.zone_size + '+'
+    zones_group_separator: str = ('|' + '-' * (2 * grid.zone_size + 1)) * grid.zone_size + '|'
+
+    grid_display: str = f'{os.linesep}{top_line}{os.linesep}'
+
+    i: int = 0
+    for line in grid.lines:
+        i += 1
+        grid_display = f'{grid_display}{zone_separator} {get_line_to_display(line, grid.zone_size)}'
+        if i % grid.zone_size == 0 and i < grid.size:
+            grid_display = f'{grid_display}{os.linesep}{zones_group_separator}'
+        grid_display = f'{grid_display}{os.linesep}'
+
+    grid_display = f'{grid_display}{top_line}'
+    print(grid_display)
+
+
+def get_line_to_display(line: NumbersSet, zone_size: int) -> str:
+    i: int = 0
+    line_to_display: str = ''
+
+    for number in line:
+        i += 1
+        line_to_display = f'{line_to_display}{number} '
+        if i == zone_size:
+            line_to_display = f'{line_to_display}{zone_separator} '
+            i = 0
+
+    return line_to_display.replace('0', '_')
