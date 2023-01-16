@@ -13,8 +13,8 @@ class NumbersSet(list[int]):
     # TODO https://stackoverflow.com/questions/1957780/how-to-override-the-operator-in-python
     # https://realpython.com/inherit-python-list/#creating-list-like-classes-in-python
 
-    def __getitem__(self, item) -> int:
-        return super().__getitem__(item)
+    def __getitem__(self, index) -> int:
+        return super().__getitem__(index)
 
     def __setitem__(self, key, value) -> None:
         super().__setitem__(key, value)

@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-@author: François Montigny
-@version : 0.3.0
-"""
-
 from random import randrange
 
 

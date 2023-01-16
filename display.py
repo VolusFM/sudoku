@@ -18,7 +18,7 @@ class SudokuGridDisplayService(object):
         grid_display: str = f'{os.linesep}{top_line}{os.linesep}'
 
         i: int = 0
-        for line in grid.lines:
+        for line in grid:
             i += 1
             grid_display = f'{grid_display}{self.zone_separator} {self.get_line_to_display(line, grid.zone_size)}'
             if i % grid.zone_size == 0 and i < grid.size:
