@@ -5,32 +5,30 @@ import numpy as np
 from numbers_set import NumbersSet
 
 
-class SudokuGrid(list[NumbersSet]):
-    zone_size: int
+class SudokuGrid(object):
+    lines: list[NumbersSet]
     size: int
+    zone_size: int
 
-    def __init__(self, lines: list[list[int]]):
-        if len(lines) == 0 or len(lines[0]) == 0:
+    def __init__(self, lines: list[NumbersSet]):
+        if len(lines) == 0 or len(lines[0].numbers) == 0:
             raise
 
-        self.size = len(lines[0])
+        self.size = len(lines[0].numbers)
         self.zone_size: int = int(np.sqrt(self.size))  # TODO repurpose this to handle non-square grids
 
-        if lines != [line for line in lines if len(line) == self.size]:
+        if lines != [line for line in lines if len(line.numbers) == self.size]:
             raise
 
-        super().__init__(lines)
+        self.lines = lines
 
-    def __getitem__(self, index) -> NumbersSet:
-        return NumbersSet(self.size, super().__getitem__(index))
-
-    def __setitem__(self, key, value) -> None:
-        super().__setitem__(key, value)
+    def extract_line(self, index) -> NumbersSet:
+        return self.lines[index]
 
     def extract_column(self, index) -> NumbersSet:
         col: list[int] = []
-        for line in self:
-            col.append(line[index])
+        for line in self.lines:
+            col.append(line.numbers[index])
 
         return NumbersSet(self.size, col)
 
@@ -41,8 +39,8 @@ class SudokuGrid(list[NumbersSet]):
 
         for line in range(self.zone_size):
             for column in range(self.zone_size):
-                zone.append(self
-                            [self.zone_size * zone_line_index + line]
+                zone.append(self.lines
+                            [self.zone_size * zone_line_index + line].numbers
                             [self.zone_size * zone_column_index + column])
 
         return NumbersSet(self.size, zone)
@@ -58,7 +56,7 @@ class SudokuGrid(list[NumbersSet]):
         index: int = 0
 
         while (index < self.size) and valid:
-            valid = predicate(self.__getitem__(index)) and\
+            valid = predicate(self.extract_line(index)) and\
                     predicate(self.extract_column(index)) and\
                     predicate(self.extract_zone(index))
             index += 1
