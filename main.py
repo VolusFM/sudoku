@@ -1,5 +1,6 @@
 from display import SudokuGridDisplayService
 from sudoku_grid import SudokuGrid
+from sudoku_grid_service import SudokuGridService
 
 sudoku_grid_display_service = SudokuGridDisplayService()
 
@@ -22,3 +23,8 @@ print(test_grid.extract_column(3))
 print(test_grid.extract_zone(3))
 print(test_grid.is_complete())
 print(test_grid.is_correct())
+
+sgs: SudokuGridService = SudokuGridService()
+
+sudoku_grid_display_service.display_grid(sgs.create_complete_grid(4))
+sudoku_grid_display_service.display_grid(sgs.create_complete_grid(9))
