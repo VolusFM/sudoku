@@ -1,6 +1,5 @@
 import os
 
-from numbers_set import NumbersSet
 from sudoku_grid import SudokuGrid
 
 
@@ -28,11 +27,11 @@ class SudokuGridDisplayService(object):
         grid_display = f'{grid_display}{top_line}'
         print(grid_display)
 
-    def get_line_to_display(self, line: NumbersSet, zone_size: int) -> str:
+    def get_line_to_display(self, line: list[int], zone_size: int) -> str:
         i: int = 0
         line_to_display: str = ''
 
-        for number in line.numbers:
+        for number in line:
             i += 1
             line_to_display = f'{line_to_display}{number} '
             if i == zone_size:
